@@ -14,15 +14,19 @@ class Config(object):
 				self._config[name] = num
 		for key, value in self._config.items():
 			print(key +' ' +value)
-	def get_config(self,name):
-		return 	self._config[name]
+	
+	def get_config(self):
+		for key, value in self._config.items():
+			if key == 'JiShuL':
+				return value
 
 	def get_ensu_rate(self):
 		ensu_rate = 0.00
 		for key, value in self._config.items():
-			print("rate is ", value)
-			if value < 1.00:
-				ensu_rate += value
+		#	print("rate is ", value)
+			value_f = float(value)
+			if value_f < 1.00:
+				ensu_rate += value_f
 		print("total ensu rate is ", ensu_rate)
 		return ensu_rate
 				
@@ -42,6 +46,7 @@ class UserData(object):
 
 def calcu_ensurance(taxl,taxh,ensu_rate,sal):
 	tax_ens = 0.00
+
 	if sal < taxl:
 		tax_ens = taxl * ensu_rate
 	elif sal > taxh:
@@ -72,8 +77,6 @@ def calcu_tax(sal,ensurance):
 		tax = sal_after * 0.45 - 13505
 	print("total tax is ", tax)
 	return tax
-	
-		
 			
 
 if __name__ == '__main__':
@@ -87,8 +90,8 @@ if __name__ == '__main__':
 	taxl = tex_config.get_config("JiShuL")
 	taxh = tex_config.get_config("JiShuH")
 	ensu_rate = tex_config.get_ensu_rate()	
-	
-	for no, sal in sal_data.userdata.items()
+	salary_data = sal_data.userdata
+	for no, sal in salary_data.items():
 		ensurance = calcu_ensurance(taxl, taxh, ensu_rate, sal)
 		print(no + "ensu is " + ensurance)
 		total_tax = calcu_tax(sal, ensurance)
