@@ -8,22 +8,16 @@ class Config(object):
 		with open(configfile) as file:
 			for str in file:
 				name,num = str.split('=')
-				print(name)
-				name.strip()
-				num.strip()
-				self._config[name] = num
+				self._config[name.strip()] = num.strip()
 		for key, value in self._config.items():
 			print(key +' ' +value)
 	
-	def get_config(self):
-		for key, value in self._config.items():
-			if key == 'JiShuL':
-				return value
+	def get_config(self,category):
+		return self._config[category]
 
 	def get_ensu_rate(self):
 		ensu_rate = 0.00
 		for key, value in self._config.items():
-		#	print("rate is ", value)
 			value_f = float(value)
 			if value_f < 1.00:
 				ensu_rate += value_f
@@ -48,17 +42,16 @@ def calcu_ensurance(taxl,taxh,ensu_rate,sal):
 	tax_ens = 0.00
 
 	if sal < taxl:
-		tax_ens = taxl * ensu_rate
+		tax_ens = float(taxl) * ensu_rate
 	elif sal > taxh:
-		tax_ens = taxh * ensu_rate
+		tax_ens = float(taxh) * ensu_rate
 	else:
 		tax_ens = sal * ensu_rate
-	print("total ensurace is ", tax_ens)
 	return tax_ens
 
 def calcu_tax(sal,ensurance):
 	tax = 0.00
-	sal_after = sal - ensurnce - 3500
+	sal_after = float(sal) - ensurance - 3500
 	if sal_after <= 0:
 		tax = 0.00
 	elif sal_after <= 1500:
@@ -75,7 +68,6 @@ def calcu_tax(sal,ensurance):
 		tax = sal_after * 0.35 - 5505
 	else:
 		tax = sal_after * 0.45 - 13505
-	print("total tax is ", tax)
 	return tax
 			
 
@@ -93,8 +85,10 @@ if __name__ == '__main__':
 	salary_data = sal_data.userdata
 	for no, sal in salary_data.items():
 		ensurance = calcu_ensurance(taxl, taxh, ensu_rate, sal)
-		print(no + "ensu is " + ensurance)
 		total_tax = calcu_tax(sal, ensurance)
-		print(no + "total tax is " + total_tax)
+		print("info of no :", no)
+		print("salary is : " ,sal)
+		print("ensu is %.2f" + str(ensurance))
+		print("total tax is %.2f" + str(total_tax))
 
 	print("End of the py")
