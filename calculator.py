@@ -83,12 +83,23 @@ if __name__ == '__main__':
 	taxh = tex_config.get_config("JiShuH")
 	ensu_rate = tex_config.get_ensu_rate()	
 	salary_data = sal_data.userdata
-	for no, sal in salary_data.items():
-		ensurance = calcu_ensurance(taxl, taxh, ensu_rate, sal)
-		total_tax = calcu_tax(sal, ensurance)
-		print("info of no :", no)
-		print("salary is : " ,sal)
-		print("ensu is %.2f" + str(ensurance))
-		print("total tax is %.2f" + str(total_tax))
-
+	index_o = args.index('-o')
+	outfile = args[index_o +1]
+	with open(outfile, 'a') as file:
+		for no, sal in salary_data.items():
+			ensurance = calcu_ensurance(taxl, taxh, ensu_rate, sal)
+			total_tax = calcu_tax(sal, ensurance)
+			income = float(sal) - ensurance - total_tax
+			print("info of no :", no)
+			print("salary is : " + '{:.2f}'.format(float(sal)))
+			print("ensu is:" + '{:.2f}'.format(ensurance))
+			print("total tax is " + '{:.2f}'.format(total_tax))
+			print("income is " + '{:.2f}'.format(income)
+			file.write( no )
+			file.write(sal)
+			file.write(ensurance)
+			file.write(total_tax)
+			file.write(income)
+			file.write()
+			file.write(
 	print("End of the py")
