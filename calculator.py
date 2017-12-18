@@ -95,11 +95,20 @@ if __name__ == '__main__':
 			print("ensu is:" + '{:.2f}'.format(ensurance))
 			print("total tax is " + '{:.2f}'.format(total_tax))
 			print("income is " + '{:.2f}'.format(income)
-			file.write( no )
+			sal_list = []
+			sal_list.append(no)
+			sal_list.append(sal)
+			sal_list.append(ensurance)
+			sal_list.append(totai_tax)
+			sal_list.append(income)
+			file.writelines(sal_list)
+			'''
+			file.write(no)
 			file.write(sal)
 			file.write(ensurance)
 			file.write(total_tax)
 			file.write(income)
 			file.write()
-			file.write(
+			'''
+			file.write('\n')
 	print("End of the py")
