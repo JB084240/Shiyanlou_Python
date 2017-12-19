@@ -9,8 +9,8 @@ class Config(object):
 			for str in file:
 				name,num = str.split('=')
 				self._config[name.strip()] = num.strip()
-		for key, value in self._config.items():
-			print(key +' ' +value)
+		#for key, value in self._config.items():
+			#print(key +' ' +value)
 	
 	def get_config(self,category):
 		return self._config[category]
@@ -21,7 +21,7 @@ class Config(object):
 			value_f = float(value)
 			if value_f < 1.00:
 				ensu_rate += value_f
-		print("total ensu rate is ", ensu_rate)
+#		print("total ensu rate is ", ensu_rate)
 		return ensu_rate
 				
 class UserData(object):
@@ -34,19 +34,19 @@ class UserData(object):
 				id,salary = str.split(',')
 				self.userdata[id] = salary
 
-		for key, value in self.userdata.items():
-			print(key + ' ' + value)
+#		for key, value in self.userdata.items():
+#			print(key + ' ' + value)
 	
 
 def calcu_ensurance(taxl,taxh,ensu_rate,sal):
 	tax_ens = 0.00
-
-	if sal < taxl:
+	sal_f = float(sal)
+	if sal_f < float(taxl):
 		tax_ens = float(taxl) * ensu_rate
-	elif sal > taxh:
+	elif sal_f > float(taxh):
 		tax_ens = float(taxh) * ensu_rate
 	else:
-		tax_ens = sal * ensu_rate
+		tax_ens = sal_f * ensu_rate
 	return tax_ens
 
 def calcu_tax(sal,ensurance):
@@ -72,12 +72,27 @@ def calcu_tax(sal,ensurance):
 			
 
 if __name__ == '__main__':
+	index = len(sys.argv)
+	#print("len is ", index)
+	if len(sys.argv) != 7:
+		print("Parameter is not 7")
+		quit()
+	#print("OK---")
+	if '-c' not in sys.argv:
+		print("There is no -c")
+		quit()
+	if '-d' not in sys.argv:
+		print("There is no -d")
+		quit()
+	if '-o' not in sys.argv:
+		print("There is no -o")
+		quit()
 	args = sys.argv[1:]
 	index_c = args.index('-c')
-	print("config file is ", args[index_c+1])
+#	print("config file is ", args[index_c+1])
 	tex_config = Config(args[index_c + 1])
 	index_d = args.index('-d')
-	print("user file is ", args[index_d + 1])
+#	print("user file is ", args[index_d + 1])
 	sal_data = UserData(args[index_d + 1])
 	taxl = tex_config.get_config("JiShuL")
 	taxh = tex_config.get_config("JiShuH")
@@ -90,14 +105,18 @@ if __name__ == '__main__':
 			ensurance = calcu_ensurance(taxl, taxh, ensu_rate, sal)
 			total_tax = calcu_tax(sal, ensurance)
 			income = float(sal) - ensurance - total_tax
+			'''
 			print("info of no :", no)
 			print("salary is : " + '{:.2f}'.format(float(sal)))
 			print("ensu is:" + '{:.2f}'.format(ensurance))
 			print("total tax is " + '{:.2f}'.format(total_tax))
 			print("income is " + '{:.2f}'.format(income))
+			'''
 			
-			result = "%d','%.2f%.2f%.2f%.2f"%(int(no),float(sal),ensurance,total_tax,income)			
+			'''
+			result = "%d%.2f%.2f%.2f%.2f"%(int(no),float(sal),ensurance,total_tax,income)			
 			file.writelines(result)
+			'''
 			'''
 			sal_list = []
 			sal_list.append(int(no))
@@ -107,14 +126,18 @@ if __name__ == '__main__':
 			sal_list.append(income)
 			
 			file.writelines(str(sal_list))
-			'''	
+	
 			'''
 			file.write(no)
-			file.write(sal)
-			file.write(ensurance)
-			file.write(total_tax)
-			file.write(income)
-			file.write()
-			'''
+			file.write(',')
+			file.write("%.2f"%(float(sal)))
+			file.write(',')
+			file.write("%.2f"%(float(ensurance)))
+			file.write(',')
+			file.write("%.2f"%(float(total_tax)))
+			file.write(',')
+			file.write("%.2f"%(float(income)))
+
 			file.write('\n')
-	print("End of the py")
+#		print("End of the py")
+
