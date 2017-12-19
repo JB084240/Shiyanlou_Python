@@ -85,7 +85,7 @@ if __name__ == '__main__':
 	salary_data = sal_data.userdata
 	index_o = args.index('-o')
 	outfile = args[index_o +1]
-	with open(outfile, 'a') as file:
+	with open(outfile, 'w') as file:
 		for no, sal in salary_data.items():
 			ensurance = calcu_ensurance(taxl, taxh, ensu_rate, sal)
 			total_tax = calcu_tax(sal, ensurance)
@@ -94,14 +94,20 @@ if __name__ == '__main__':
 			print("salary is : " + '{:.2f}'.format(float(sal)))
 			print("ensu is:" + '{:.2f}'.format(ensurance))
 			print("total tax is " + '{:.2f}'.format(total_tax))
-			print("income is " + '{:.2f}'.format(income)
+			print("income is " + '{:.2f}'.format(income))
+			
+			result = "%d','%.2f%.2f%.2f%.2f"%(int(no),float(sal),ensurance,total_tax,income)			
+			file.writelines(result)
+			'''
 			sal_list = []
-			sal_list.append(no)
-			sal_list.append(sal)
-			sal_list.append(ensurance)
-			sal_list.append(totai_tax)
+			sal_list.append(int(no))
+			sal_list.append(float("%.2f"%(float(sal))))
+			sal_list.append(float("%.2f"%(ensurance)))
+			sal_list.append(total_tax)
 			sal_list.append(income)
-			file.writelines(sal_list)
+			
+			file.writelines(str(sal_list))
+			'''	
 			'''
 			file.write(no)
 			file.write(sal)
