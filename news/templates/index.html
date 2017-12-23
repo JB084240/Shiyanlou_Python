@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+
+{% macro article_title(article) %}
+    <div>
+        <p> Title: {{ article.title }} </p>
+    </div>
+{% endmacro %}
+
+<html>
+    <head>
+        <meta charset = "utf-8">
+        {% block header %}
+        <h1> Index </h1>
+        {% endblock %}
+        <title>The article title</title>
+    </head>
+    <body>
+        {% block content %}
+        <p>The article: </p>
+        {% for list in f_index %}
+            <div> {{ article_title(list) }} </div>
+            <p> {{ '*' * 20 }} </p>
+        {% endfor %}
+        {% endblock %}
+    </body>
+</html>
