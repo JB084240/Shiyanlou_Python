@@ -51,7 +51,7 @@ def not_found(error):
 
 @app.route('/files/<file_Id>')
 def file(file_Id):
-    file_dict = File.query.filter(id==file_Id)
+    file_dict = File.query.filter_by(id=file_Id).first()
     if file_dict:
         return render_template('file.html', file_dict=file_dict)
     
@@ -60,11 +60,8 @@ def file(file_Id):
 
 @app.route('/')
 def index():
-    f_index = File.query.all()
+    f_index = db.session.query(File).all()
     if f_index:
-        for f in f_index:
-            path = '/files/' + String(f.id)
-            f['path'] = path
         return render_template('index.html', f_index=f_index)
 
 

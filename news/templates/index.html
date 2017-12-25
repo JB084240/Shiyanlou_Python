@@ -1,13 +1,5 @@
 {% extends "base.html" %}
 <!DOCTYPE html>
-
-{% macro article_title(article) %}
-    <div>
-        <p> Title: {{ article.title }} </p>
-        <a href= {{ article.path }} >Article Content</a>
-    </div>
-{% endmacro %}
-
 <html>
     <head>
         <meta charset = "utf-8">
@@ -18,10 +10,9 @@
     </head>
     <body>
         {% block content %}
-        <p>The article: </p>
         {% for list in f_index %}
-            <div> {{ article_title(list) }} </div>
-            <p> {{ '*' * 20 }} </p>
+        <p> Title: {{ list.title }}</p>
+            <li><a href= "{{ url_for('file',file_Id=list.id) }}">Article Content</a></li>
         {% endfor %}
         {% endblock %}
     </body>

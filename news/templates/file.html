@@ -15,10 +15,13 @@
         <p>***The detail info: *** </p>
         <p> Title: {{ file_dict.title }} </p>
         <p> Created_time: {{ file_dict.created_time }} </p>
-        <p> Content: </p>
+        <p> Content: {{ file_dict.content }}</p>
+        
+        {#
         {% for list in file_dict.content %}
             <p>{{ list }}</p>
         {% endfor %}
+        #}
         <p> {{ '*' * 30 }} </p>
     </div>
     {% endblock %}
