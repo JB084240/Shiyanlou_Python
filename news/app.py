@@ -7,6 +7,11 @@ import sys, os, json
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
+from pymongo import MongoClient
+
+client = MongoClient('localhost', 27017)
+db = client.filetag
+
 app = Flask(__name__)
 app.config['TEMPLATE_AUTO_RELOAD'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/news'
@@ -27,9 +32,29 @@ class File(db.Model):
         self.created_time = datetime.utcnow()
         self.category = category
         self.content = content
-    
+
     def __repr__(self):
         return '<File %r>' % self.title
+
+    def add_tag(self, tag_name):
+        for tag_list in db.user.find():
+            if tag_list[id] == self.id and tag_name == tag_list.tag:
+                break
+        tag = {'id': self.id, 'tag': tag_name}
+        db.user.insert_one(tag)
+
+    def remove_tag(self, tag_name):
+        for tag_list in db.user.find():
+            if tag_list[id] == self.id and tag_list.tag == tag_name:
+                db.user.delete_one(tag_list)
+
+    @property
+    def tags(self):
+        id_tag = []
+        for tag_list in db.user.find():
+            if tag_list[id] == self.id:
+                id_tag.append(tag_list[tag])
+        return id_tag
 
 
 class Category(db.Model):

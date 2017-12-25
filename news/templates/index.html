@@ -11,7 +11,8 @@
     <body>
         {% block content %}
         {% for list in f_index %}
-        <p> Title: {{ list.title }}</p>
+            <p> Title: {{ list.title }}</p>
+            <p> Tag: {{ list.tags }} </p>
             <li><a href= "{{ url_for('file',file_Id=list.id) }}">Article Content</a></li>
         {% endfor %}
         {% endblock %}
