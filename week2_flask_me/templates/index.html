@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "utf-8">
+        {% block header %}
+        <h1> Index </h1>
+        {% endblock %}
+        <title>The article title</title>
+    </head>
+    <body>
+        {% block content %}
+        {% for list in f_index %}
+            <p> Title: {{ list.title }}</p>
+            <p> Tag: {{ list.tags }} </p>
+            <li><a href= "{{ url_for('file',file_Id=list.id) }}">Article Content</a></li>
+        {% endfor %}
+        {% endblock %}
+    </body>
+</html>
