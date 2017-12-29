@@ -1,5 +1,9 @@
 # -*- coding:utf-8 -*-
 
+#pre-condition: install scrapy: sudo pip3 install sctapy
+#command: scrapy runspider filename.py -o outputfilename.json
+
+
 import scrapy
 
 class Shiyanlou_Git(scrapy.Spider):
@@ -17,8 +21,7 @@ class Shiyanlou_Git(scrapy.Spider):
         for course in response.css('li.col-12'):
             yield{
                 "name": course.css('div.d-inline-block a::text').re_first('(\w.+\w$)[\W]*'),
-                #"name": course.css('div.d-inline-block a::text').re_first('[^\W]*(\w.+\w$)[\W]*'),
-                #"name": course.css('.//div[contains(@class,"d-inline-block")]/a/text()[2]').extract_first(),
+                #"name": course.css('div.d-inline-block a::text').re_first('[\n\s*(.*)'),
                 
                 "update_time": course.css('div.text-gray relative-time::attr(datetime)').re_first('[^\d]*(\d*.+Z$)[.]*')
 
