@@ -16,12 +16,13 @@ class Shiyanlou_Git(scrapy.Spider):
     def parse(self, response):
         for course in response.css('li.col-12'):
             yield{
-                "name": course.css('div.d-inline-block a::text()').extract_first(),
+                "name": course.css('div.d-inline-block a::text').re_first('(\w.+\w$)[\W]*'),
+                #"name": course.css('div.d-inline-block a::text').re_first('[^\W]*(\w.+\w$)[\W]*'),
                 #"name": course.css('.//div[contains(@class,"d-inline-block")]/a/text()[2]').extract_first(),
                 
-                #"update_time": course.css('div.f6 relative-time').re('[^\d]*(\d*.+Z$).*'),
+                "update_time": course.css('div.text-gray relative-time::attr(datetime)').re_first('[^\d]*(\d*.+Z$)[.]*')
 
-                "update_time": course.css('.//div[contains(@class,"f6"]/relative-time').re('[^\d]*(\d*.+Z$).*'),
+                #"update_time": course.css('.//div[contains(@class,"f6"]/relative-time').re('[^\d]*(\d*.+Z$).*'),
             }
 
 
