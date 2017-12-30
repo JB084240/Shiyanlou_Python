@@ -10,6 +10,8 @@ from shiyanlougithub.models import Repository, engine
 from shiyanlougithub.items import RepositoryItem
 from datetime import datetime
 
+#run command: scrapy crawl reposiotry
+
 class ShiyanlougithubPipeline(object):
     def process_item(self, item, spider):
         origin_time = item['update_time'].split('T')
