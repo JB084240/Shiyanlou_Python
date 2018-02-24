@@ -16,3 +16,7 @@ class ShiyanlougithubItem(scrapy.Item):
 class RepositoryItem(scrapy.Item):
     name = scrapy.Field()
     update_time = scrapy.Field()
+
+class CourseImageItem(scrapy.Item):
+    image_urls = scrapy.Field()
+    images = scrapy.Field()
